@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+$primary: #222222;
+$secondary: #a9a9a9;
+
+label {
+    &::after {
+        display: none !important
+    }
+}
+
+.page-header {
+  padding: 24px;
+  &-title {
+    font-size: 24px;
+  }
+}
+
+.filter-list {
+  width: 100%;
+  > div:first-of-type {
+    float: left;
+  }
+
+  >div:last-of-type {
+    width: auto;
+    overflow: hidden;
+  }
+}
+
+.filter-box {
+  opacity: 0;
+  width: 0;
+  transition: ease .2s;
+}
+
+.filter-opened {
+  opacity: 1;
+  width: 360px;
+}
+
+.form-display-data {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.col-pagination {
+  padding-top: 6px;
+}
+
+.approval-date-modal {
+  width: 350px !important;
+}
+
+.specification-modal {
+  width: 700px !important;
+}
+
+.tax-module-properties-modal {
+  .ant-tabs-tabpane {
+    padding: 0 24px;
+  }
+}

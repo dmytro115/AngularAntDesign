@@ -1,0 +1,43 @@
+<div style="padding: 24px">
+  <form nz-form [formGroup]="form" (ngSubmit)="applyFilter()">
+
+    <nz-form-item>
+      <nz-form-label>Last Name</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="filterLastName">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label>First Name</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="filterFirstName">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label>Country</nz-form-label>
+      <nz-form-control>
+          <nz-select formControlName="filterCountry" nzShowSearch>
+            <nz-option *ngFor="let country of countries" [nzLabel]="country.label" [nzValue]="country.value"></nz-option>
+          </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label>Address</nz-form-label>
+      <nz-form-control>
+        <input nz-input formControlName="filterAddress">
+      </nz-form-control>
+    </nz-form-item>
+
+    <div nz-row nzType="flex" nzJustify="end">
+      <div nz-col nzOrder="2">
+        <button nz-button nzType="primary" type="submit">Apply</button>
+      </div>
+      <div nz-col nzOrder="1" style="margin-right: 12px" >
+        <button nz-button nzType="default" (click)="clearFilter()">Clear</button>
+      </div>
+    </div>
+  </form>
+</div>

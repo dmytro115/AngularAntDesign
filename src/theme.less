@@ -1,0 +1,88 @@
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+// @primary-color          : #666666;
+.ant-layout {
+  background: #ffffff !important;
+
+  &-header {
+    background: #001529;
+    padding: 0 24px;
+    height: 48px;
+    line-height: 48px;
+  }
+}
+
+.ant-menu {
+  color: white;
+  border-right: unset;
+
+  &-item {
+    /*background: #111111;*/
+    margin: 0 !important;
+    border-right: unset !important;
+    width: 100% !important;
+
+    &:focus {
+      outline: none !important;
+    }
+
+    &-selected {
+      /*background: #000000 !important;*/
+      color: white;
+      border-right: unset !important;
+
+      &::after {
+        display: none !important;
+      }
+    }
+  }
+
+  &:not(.ant-menu-inline) .ant-menu-submenu-open {
+    color: white !important;
+  }
+}
+
+.ant-menu-submenu-popup {
+  top: 1px !important;
+}
+.ant-menu-submenu > .ant-menu {
+  border-radius: 0 !important;
+}
+
+nz-spin, .ant-spin-nested-loading, .ant-spin-container, .ant-spin {
+  height: 100%;
+  max-height: unset !important;
+}
+
+.ant-spin-blur {
+  opacity: 0.2 !important;
+}
+
+.ant-modal-body {
+  padding: 0px !important;
+}
+
+.ant-tabs-nav {
+  padding-left: 8px !important;
+}
+
+.ant-tabs-tabpane {
+  padding: 24px;
+}
+
+.ant-calendar-picker, nz-picker {
+  width: 100%;
+  display: block;
+}
+
+.ant-card-head {
+  background: #fafafa;
+}
+
+.ant-card-extra {
+  padding: 12px 0;
+}
+
+.ant-input-number {
+  width: 100% !important;
+}

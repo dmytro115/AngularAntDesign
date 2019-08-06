@@ -1,0 +1,91 @@
+<div>
+  <div nz-row nzType="flex" nzJustify="space-between" class="page-header">
+    <div nz-col>
+      <div nz-row nzType="flex" nzJustify="start" nzAlign="middle" nzGutter='12'>
+        <div nz-col class="page-header-title">
+          <strong>Natural Person </strong><span>List</span>
+        </div>
+        <div nz-col class="operation-btns">
+          <button nz-button (click)="showFilter = !showFilter" [ngClass]="{'selected': showFilter}"><i nz-icon type="filter"></i></button>
+          <button nz-button (click)="isAdding = true"><i nz-icon type="plus"></i></button>
+          <button nz-button nz-popconfirm nzTitle="Are you sure?" (nzOnConfirm)="removeSelected()" [disabled]="!checkStatus.indeterminate && !checkStatus.all"><i nz-icon type="delete"></i></button>
+          <nz-dropdown [nzTrigger]="'click'">
+            <button nz-button nz-dropdown><i nz-icon type="ellipsis"></i></button>
+            <ul nz-menu>
+              <li nz-menu-item>
+                <a (click)="exportList()" i18n>Export List</a>
+              </li>
+              <li nz-menu-item>
+                <a (click)="importList()" i18n>Import List</a>
+                <input type="file" #file (change)="onFileSelect($event.target)" name="Import CSV" accept=".csv" style="display: none">
+              </li>
+            </ul>
+          </nz-dropdown>
+        </div>
+        <div nz-col>
+          <form (ngSubmit)="lookUp()">
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+              <input name="registrationNumber" style="min-width: 270px" nz-input placeholder="Registration Number" [(ngModel)]="registrationNumber" type="text">
+              <button type="submit" style="display: none;"></button>
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+              <i nz-icon type="search"></i>
+            </ng-template>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div nz-col class="col-pagination">
+      <app-pagination
+        [previous]="previous"
+        [next]="next"
+        (firstPage)="firstPage()"
+        (previousPage)="previousPage()"
+        (nextPage)="nextPage()"
+        (lastPage)="lastPage()">
+      </app-pagination>
+    </div>
+  </div>
+  <div class="filter-list">
+    <div class="filter-box" [ngClass]="{'filter-opened': showFilter}">
+      <app-filter [countries]="countries"></app-filter>
+    </div>
+    <div style="padding: 0 24px">
+      <nz-table #filterTable nzSize="middle" [nzData]="items" [nzPageSize]="limit" nzShowPagination="false">
+        <thead>
+          <tr>
+            <th
+              nzShowCheckbox
+              [(nzChecked)]="checkStatus.all"
+              [nzIndeterminate]="checkStatus.indeterminate"
+              (nzCheckedChange)="checkAll($event)">
+            </th>
+            <th>#</th>
+            <th nzShowSort [(nzSort)]="sortMap.lastName" (nzSortChange)="sort('lastName', $event)">Last Name</th>
+            <th nzShowSort [(nzSort)]="sortMap.firstName" (nzSortChange)="sort('firstName', $event)">First Name</th>
+            <th>Registration Number</th>
+            <th nzShowSort [(nzSort)]="sortMap.address" (nzSortChange)="sort('address', $event)">Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of filterTable.data">
+            <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+            <td (click)="toDetailsPage(data)">{{data.id}}</td>
+            <td (click)="toDetailsPage(data)">{{data.lastName}}</td>
+            <td (click)="toDetailsPage(data)">{{data.firstName}}</td>
+            <td (click)="toDetailsPage(data)">{{data.registrationNumber}}</td>
+            <td (click)="toDetailsPage(data)">{{data.address}}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
+  <app-create-person-modal
+    [visible]="isAdding"
+    [countries]="countries"
+    [civilStatuses]="civilStatuses"
+    (cancel)="isAdding = false"
+    (confirm)="createPerson($event)">
+  </app-create-person-modal>
+</div>

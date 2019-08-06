@@ -1,0 +1,53 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Create Tax Claim" (nzOnCancel)="closeModal()" (nzOnOk)="nextStep()">
+  <div style="padding: 24px">
+    <nz-steps [nzCurrent]="step">
+      <nz-step></nz-step>
+      <nz-step></nz-step>
+      <nz-step></nz-step>
+    </nz-steps>
+    <form *ngIf="form" nz-form [formGroup]="form" style="margin-top: 24px">
+      <div *ngIf="step == 0" nz-row nzType="flex" nzGutter="24">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired>Tax Register</nz-form-label>
+            <nz-form-control>
+              <app-autocomplete formControlName="register"  valueField="code" labelField="name" [data]="taxRegisters"></app-autocomplete>
+              <nz-form-explain *ngIf="register.dirty && register.errors">Please select the tax register!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div *ngIf="step == 1" nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired>Tax Payer Type</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group formControlName="taxPayerType">
+                <label *ngFor="let payer of taxPayerTypes" nz-radio [nzValue]="payer.value">{{payer.label}}</label>
+              </nz-radio-group>
+            </nz-form-control>
+            <nz-form-explain *ngIf="taxPayerType.dirty && taxPayerType.errors">Please select the tax payer type!</nz-form-explain>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired>Tax Payer</nz-form-label>
+            <app-autocomplete
+              formControlName="taxPayerId"
+              [data]="taxPayerType.value == 'NATURAL_PERSON' ? naturalPersons : legalEntities"
+              valueField="value"
+              labelField="label"
+              (inputChange)="getTaxPayers($event)">
+            </app-autocomplete>
+            <nz-form-explain *ngIf="taxPayerId.dirty && taxPayerId.errors">Please select the tax payer!</nz-form-explain>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div *ngIf="step == 2">
+        <app-dynamic-form [structure]="dynamicForm.form" [value]="dynamicForm.object" [(control)]="dfControl"></app-dynamic-form>
+      </div>
+    </form>
+  </div>
+</nz-modal>
